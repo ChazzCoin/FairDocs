@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+    nvidia-smi:
+        container_name: nvidia
+        restart: unless-stopped
+        network_mode: bridge
+        hostname: 93493aee55cb
+        environment:
+            - 'PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - CUDA_VERSION=10.0.130
+            - CUDA_PKG_VERSION=10-0=10.0.130-1
+            - 'LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64'
+            - NVIDIA_VISIBLE_DEVICES=all
+            - 'NVIDIA_DRIVER_CAPABILITIES=compute,utility'
+            - 'NVIDIA_REQUIRE_CUDA=cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=410,driver<411'
+        labels:
+            - 'maintainer=NVIDIA CORPORATION <cudatools@nvidia.com>'
+        image: nvidia-smi

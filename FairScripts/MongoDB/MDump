@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+# -> Mac M1
+#!/bin/zsh
+# -> Basic Linux
+#!/usr/bin/bash
+
+# -> VERIFIED
+
+echo Running MongoDump on research-articles
+sudo mongodump --forceTableScan --host sozindb.vaatu.co --port 1214 --db research -o research/
+#sshpass -p 'password' scp -r /home/sozin/bin/TiffanySystem/mongobackup/research/ hark@192.168.1.166:/home/hark/bin/TiffanySystem/mongorestore
+echo Done!

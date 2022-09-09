@@ -1,0 +1,17 @@
+AWS_CONFIG_FILE=/config/dns-conf/route53.ini
+DHLEVEL=2048
+DOCKER_MODS=linuxserver/mods:swag-dashboard|linuxserver/mods:swag-auto-reload
+EXTRA_DOMAINS=radio.glewme.tv, live.glewme.tv, docker.glewme.tv, vint.glewme.tv
+HOME=/root
+ONLY_SUBDOMAINS=false
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PGID=1000
+PS1=$(whoami)@$(hostname):$(pwd)\$
+PUID=1000
+S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
+SUBDOMAINS=sonarr,home,netdata,web,docker,chazzcoin,rss,vaatainer
+TERM=xterm
+TZ=America/Chicago
+URL=aokiromeo.duckdns.org
+VALIDATION=http

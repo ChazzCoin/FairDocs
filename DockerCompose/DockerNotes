@@ -1,0 +1,11 @@
+
+# -> Get the docker run command from a container...
+docker inspect --format "$(curl -s https://gist.githubusercontent.com/efrecon/8ce9c75d518b6eb863f667442d7bc679/raw/run.tpl)" 6a74e58aab109b1805ff0beceb92ba9e42e8a00640b4df30c626f8ef136d83bd
+
+
+docker run -d -p 8000:8000 -p 9000:9000 -p 9443:9443 \
+    --name=vaatainer --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /media/aoki/3TBMEDIA1/docker/portainer:/data \
+    portainer/portainer-ce:2.9.3
+

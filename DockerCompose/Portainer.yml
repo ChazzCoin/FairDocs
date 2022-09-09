@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    portainer:
+        ports:
+            - '9000:9000'
+            - '8000:8000'
+        container_name: vaatainer
+        network_mode: proxynet
+        restart: always
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+            - '/media/aoki/3TBMEDIA1/docker/portainer:/data'
+        image: portainer/portainer
+

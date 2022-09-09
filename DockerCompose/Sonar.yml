@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+    arch-sonarr:
+        ports:
+            - '8989:8989'
+            - '9897:9897'
+        container_name: sonarr
+        volumes:
+            - '/media/aoki/3TBMEDIA1/docker/Downloads:/media'
+            - '/media/aoki:/data'
+            - '/media/aoki/3TBMEDIA1/docker/sonarr:/config'
+            - '/etc/localtime:/etc/localtime:ro'
+        environment:
+            - UMASK=000
+            - PUID=1000
+            - PGID=1000
+        image: binhex/arch-sonarr

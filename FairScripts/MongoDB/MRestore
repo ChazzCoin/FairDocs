@@ -1,0 +1,11 @@
+#!/bin/zsh
+# -> Mac M1
+#!/usr/bin/bash
+# -> Basic Linux
+
+# -> VERIFIED
+
+echo Restoring research-articles from MongoDump
+mongo research --eval 'db.articles.drop()'
+mongorestore --db research --collection articles articles.bson
+echo Done!

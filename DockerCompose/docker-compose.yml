@@ -1,0 +1,146 @@
+version: '3.3'
+services:
+    portainer:
+        ports:
+            - '9000:9000'
+            - '8000:8000'
+        container_name: vaatainer
+        network_mode: proxynet
+        restart: always
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+            - '/media/aoki/3TBMEDIA1/docker/portainer:/data'
+        image: portainer/portainer
+    linuxserver:
+        container_name: duckdns
+        volumes:
+            - '/media/aoki/3TBMEDIA1/docker/duckdns:/config'
+        restart: unless-stopped
+        network_mode: bridge
+        hostname: 6a74e58aab10
+        environment:
+            - LOG_FILE=false
+            - PUID=1000
+            - PGID=1000
+            - TZ=America/Chicago
+            - 'SUBDOMAINS=aokiromeo,aokiplex'
+            - TOKEN=3cdbd5f9-e51e-4af8-90f2-d9409b98ac15
+            - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - 'PS1=$(whoami)@$(hostname):$(pwd)\\$ '
+            - HOME=/root
+            - TERM=xterm
+            - S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+        labels:
+            - 'build_version=Linuxserver.io version:- d878afd7-ls59 Build-date:- 2020-11-02T16:43:22+00:00'
+            - maintainer=aptalca
+        entrypoint:
+            - /init
+        image: ghcr.io/linuxserver/duckdns
+    swag:
+        container_name: swag-ssl
+        volumes:
+            - '/media/aoki/3TBMEDIA1/docker/swagtwo:/config'
+        restart: unless-stopped
+        ports:
+            - '0.0.0.0:443:443/tcp'
+            - '0.0.0.0:80:80/tcp'
+        network_mode: proxynet
+        hostname: swagtwo
+        expose:
+            - 443/tcp
+            - 80/tcp
+        environment:
+            - ONLY_SUBDOMAINS=false
+            - PUID=1000
+            - PGID=1000
+            - TZ=America/Chicago
+            - URL=aokiromeo.duckdns.org
+            - 'SUBDOMAINS=sonarr,home,netdata,docker,web,chazzcoin,rss'
+            - VALIDATION=http
+            - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - 'PS1=$(whoami)@$(hostname):$(pwd)\\$ '
+            - HOME=/root
+            - TERM=xterm
+            - DHLEVEL=2048
+            - AWS_CONFIG_FILE=/config/dns-conf/route53.ini
+            - S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+            - 'EXTRA_DOMAINS=radio.glewme.tv, live.glewme.tv'
+        entrypoint:
+            - /init
+        image: 'linuxserver/swag:latest'
+    unifi-controller:
+        container_name: unifi-controller
+        environment:
+            - PUID=1000
+            - PGID=1000
+        ports:
+            - '3478:3478/udp'
+            - '10001:10001/udp'
+            - '8888:8080'
+            - '8443:8443'
+        volumes:
+            - '/media/aoki/3TBMEDIA1/docker/unifi:/config'
+        restart: unless-stopped
+        image: linuxserver/unifi-controller
+    nvidia-smi:
+        container_name: nvidia
+        restart: unless-stopped
+        network_mode: bridge
+        hostname: 93493aee55cb
+        environment:
+            - 'PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - CUDA_VERSION=10.0.130
+            - CUDA_PKG_VERSION=10-0=10.0.130-1
+            - 'LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64'
+            - NVIDIA_VISIBLE_DEVICES=all
+            - 'NVIDIA_DRIVER_CAPABILITIES=compute,utility'
+            - 'NVIDIA_REQUIRE_CUDA=cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=410,driver<411'
+        labels:
+            - 'maintainer=NVIDIA CORPORATION <cudatools@nvidia.com>'
+        image: nvidia-smi
+    plex:
+        container_name: plex
+        privileged: false
+        volumes:
+            - '/media/aoki/3TBMEDIA1/docker/plex:/config'
+            - '/media/aoki:/media'
+        restart: unless-stopped
+        devices:
+            - '/dev/dri/card0:/dev/dri/card0:rwm'
+        network_mode: host
+        hostname: aoki-vaatu
+        expose:
+            - 1900/udp
+            - 3005/tcp
+            - 32400/tcp
+            - 32410/udp
+            - 32412/udp
+            - 32413/udp
+            - 32414/udp
+            - 32469/tcp
+            - 5353/udp
+            - 8324/tcp
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - UUID=GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04
+            - NVIDIA_VISIBLE_DEVICES=GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04
+            - 'NVIDIA_DRIVER_CAPABILITIES=compute,video,utility'
+            - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - HOME=/root
+            - LANGUAGE=en_US.UTF-8
+            - LANG=en_US.UTF-8
+            - TERM=xterm
+            - DEBIAN_FRONTEND=noninteractive
+            - 'PLEX_DOWNLOAD=https://downloads.plex.tv/plex-media-server-new'
+            - PLEX_ARCH=amd64
+            - 'PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/config/Library/Application Support'
+            - PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
+            - PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+            - PLEX_MEDIA_SERVER_USER=abc
+            - PLEX_MEDIA_SERVER_INFO_VENDOR=Docker
+            - 'PLEX_MEDIA_SERVER_INFO_DEVICE=Docker Container (LinuxServer.io)'
+        entrypoint:
+            - /init
+        image: 'linuxserver/plex:latest'
+

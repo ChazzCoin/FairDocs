@@ -1,0 +1,47 @@
+version: '3.3'
+services:
+    plex:
+        container_name: plex
+        privileged: false
+        volumes:
+            - '/media/aoki/3TBMEDIA1/docker/plex:/config'
+            - '/media/aoki:/media'
+        restart: unless-stopped
+        devices:
+            - '/dev/dri/card0:/dev/dri/card0:rwm'
+        network_mode: host
+        hostname: aoki-vaatu
+        expose:
+            - 1900/udp
+            - 3005/tcp
+            - 32400/tcp
+            - 32410/udp
+            - 32412/udp
+            - 32413/udp
+            - 32414/udp
+            - 32469/tcp
+            - 5353/udp
+            - 8324/tcp
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - UUID=GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04
+            - NVIDIA_VISIBLE_DEVICES=GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04
+            - 'NVIDIA_DRIVER_CAPABILITIES=compute,video,utility'
+            - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - HOME=/root
+            - LANGUAGE=en_US.UTF-8
+            - LANG=en_US.UTF-8
+            - TERM=xterm
+            - DEBIAN_FRONTEND=noninteractive
+            - 'PLEX_DOWNLOAD=https://downloads.plex.tv/plex-media-server-new'
+            - PLEX_ARCH=amd64
+            - 'PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/config/Library/Application Support'
+            - PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver
+            - PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6
+            - PLEX_MEDIA_SERVER_USER=abc
+            - PLEX_MEDIA_SERVER_INFO_VENDOR=Docker
+            - 'PLEX_MEDIA_SERVER_INFO_DEVICE=Docker Container (LinuxServer.io)'
+        entrypoint:
+            - /init
+        image: 'linuxserver/plex:latest'

@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+    linuxserver:
+        container_name: duckdns
+        volumes:
+            - '/media/aoki/3TBMEDIA/docker/duckdns:/config'
+        restart: unless-stopped
+        network_mode: bridge
+        hostname: 6a74e58aab10
+        environment:
+            - LOG_FILE=false
+            - PUID=1000
+            - PGID=1000
+            - TZ=America/Chicago
+            - 'SUBDOMAINS=aokiromeo,aokiplex'
+            - TOKEN=3cdbd5f9-e51e-4af8-90f2-d9409b98ac15
+            - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+            - 'PS1=$(whoami)@$(hostname):$(pwd)\\$ '
+            - HOME=/root
+            - TERM=xterm
+            - S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+        labels:
+            - 'build_version=Linuxserver.io version:- d878afd7-ls59 Build-date:- 2020-11-02T16:43:22+00:00'
+            - maintainer=aptalca
+        entrypoint:
+            - /init
+        image: ghcr.io/linuxserver/duckdns

@@ -1,0 +1,50 @@
+#ADDING NVIDIA TO UBUNTU/DOCKER:
+
+$ nano /etc/modprobe.d/blacklist-nouveau.conf
+#->Add these lines to .conf file<-#
+blacklist nouveau
+options nouveau modeset=0
+
+--->>>REBOOT<<<---
+#-> Updates
+update-initramfs -u
+$ sudo apt install gcc
+$ sudo apt install binutils
+$ sudo apt install make
+$ sudo apt install linux-source
+
+https://www.nvidia.com/Download/index.aspx?lang=en-us
+
+#-> DOWNLOAD/INSTALL NVIDIA DRIVER -> (just install driver if broken)
+$ mkdir /opt/nvidia && cd /opt/nvidia
+$ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey 4 | \
+$ sudo apt-key add - distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+$ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list 3 | \
+$ sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+$ sudo apt-get update
+$ sudo wget nvidia-drivers-url (in my case, http://us.download.nvidia.com/XFree86/Linux-x86_64/440.44/NVIDIA-Linux-x86_64-440.44.run 4)
+$ chmod +x ./NVIDIA-Linux-x86_64-440.82.run (~/bin/nvidia/)
+
+-> http://us.download.nvidia.com/XFree86 ...
+-> ... /Linux-x86_64/470.141.03/NVIDIA-Linux-x86_64-470.141.03.run
+
+
+http://us.download.nvidia.com/XFree86/Linux-x86_64/470.141.03/NVIDIA-Linux-x86_64-470.141.03.run
+
+-->> (just run this line if broken) <<--
+sudo /etc/init.d/lightdm stop
+$ sudo ./NVIDIA-Linux-x86_64-440.82.run --dkms //-> (~/bin/nvidia/)
+
+-->> ?? if --dkm issues, try... <<--
+$ sudo apt-get install dkms build-essential make
+
+aoki@aoki-vaatu:/$ nvidia-smi --list-gpus
+GPU 0: NVIDIA GeForce GT 710 (UUID: GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04)
+
+#-> FINISHED UP -> Verify that drivers were installed
+$ nvidia-smi
+$ sudo apt install nvidia-docker2 nvidia-container-runtime
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart docker
+
+#then create the docker with

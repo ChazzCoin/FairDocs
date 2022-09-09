@@ -1,0 +1,25 @@
+
+# -> Main
+docker run -d -p 8000:8000 -p 9000:9000 -p 9443:9443 \
+    --name=vaatainer --restart=always \
+    --network proxynet \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /media/aoki/3TBMEDIA1/docker/portainer:/data \
+    portainer/portainer-ce:2.9.3
+
+  docker run -p 9443:9443 -p 8000:8000 \
+    --name portainer3 --restart always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /media/aoki/3TBMEDIA1/docker/portainer2:/data \
+    -v /media/aoki/3TBMEDIA1/docker/swagtwo/keys:/certs \
+    portainer/portainer-ce:latest \
+    --sslcert /media/aoki/3TBMEDIA1/docker/swagtwo/keys/cert.crt \
+    --sslkey /media/aoki/3TBMEDIA1/docker/swagtwo/keys/cert.key
+
+# -> Agent
+
+docker run -d -p 9001:9001 --name portainer_agent --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent:2.9.3
+
+# -> Revert from EE to CE
+docker run --rm --volumes-from vaatainer -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /data
+docker run -it --name portainer-database-rollback -v /media/aoki/3TBMEDIA1/docker/portainer:/data portainer/portainer-ee:latest --rollback-to-ce

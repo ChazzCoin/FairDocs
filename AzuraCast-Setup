@@ -1,0 +1,18 @@
+
+
+1. Download/Prep
+
+    A.)
+        sudo su
+        mkdir -p /var/azuracast
+        cd /var/azuracast
+    B.)
+        curl -fsSL https://raw.githubusercontent.com/AzuraCast/AzuraCast/main/docker.sh > docker.sh
+        chmod a+x docker.sh
+        ./docker.sh install
+
+the docker.sh file will do everything you need.
+
+2. docker-compose up --build
+    - docker-compose down
+
