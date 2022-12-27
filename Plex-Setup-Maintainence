@@ -13,8 +13,6 @@ $ sudo apt install binutils
 $ sudo apt install make
 $ sudo apt install linux-source
 
-https://www.nvidia.com/Download/index.aspx?lang=en-us
-
 #-> DOWNLOAD/INSTALL NVIDIA DRIVER -> (just install driver if broken)
 $ mkdir /opt/nvidia && cd /opt/nvidia
 $ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey 4 | \
@@ -28,12 +26,18 @@ $ chmod +x ./NVIDIA-Linux-x86_64-440.82.run (~/bin/nvidia/)
 -> http://us.download.nvidia.com/XFree86 ...
 -> ... /Linux-x86_64/470.141.03/NVIDIA-Linux-x86_64-470.141.03.run
 
+--> HOW TO FIX/UPDATE NVIDIA DRIVER AND DOCKER CONTAINER <--
+Main Site
+- https://www.nvidia.com/Download/index.aspx?lang=en-us
+- Current GPU: NVIDIA GeForce GT 710
+1. Download .run file
+2. Move file into /opt/nvidia/
+3. Make file executable: sudo chmod +x ./NVIDIA-Linux-x86_64-440.82.run
+4. sudo /etc/init.d/lightdm stop
+5. sudo ./NVIDIA-Linux-x86_64-440.82.run --dkms //-> (~/bin/nvidia/)
 
+-> FIND DRIVER VERSION, REPLACE HERE AND USE WGET TO DOWNLOAD THE CORRECT FILE.
 http://us.download.nvidia.com/XFree86/Linux-x86_64/470.141.03/NVIDIA-Linux-x86_64-470.141.03.run
-
--->> (just run this line if broken) <<--
-sudo /etc/init.d/lightdm stop
-$ sudo ./NVIDIA-Linux-x86_64-440.82.run --dkms //-> (~/bin/nvidia/)
 
 -->> ?? if --dkm issues, try... <<--
 $ sudo apt-get install dkms build-essential make
