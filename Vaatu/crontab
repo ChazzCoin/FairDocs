@@ -1,0 +1,15 @@
+# m h  dom mon dow   command
+#MAILTO=""
+#@reboot ~/bin/runapi
+#* * * * * ~/bin/runapi >> /home/aoki/bin/logs/apiLOGS.log 2>&1
+@reboot ~/bin/dockerstart
+@reboot ~/bin/spiritworld
+#* * 1 * * ~/bin/backdockervolumes
+#0 0 * * * ~/bin/clean
+
+#0 */24 * * * /home/aoki/bin/vaatulogs
+#* */6 * * * /home/aoki/bin/vaatulogs >> /home/aoki/bin/logs/cronVaatuLogs.log >
+#0 */1 * * * /home/aoki/bin/rsSSH
+#TEST
+#* * * * * echo ‘Run this command every minute’ >> /home/aoki/bin/logs/file.log
+

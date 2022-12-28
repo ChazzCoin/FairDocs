@@ -1,3 +1,8 @@
+
+-- URL / GODADDY SETUP --
+
+-- CONFIGURATION VARIABLES --
+
 AWS_CONFIG_FILE=/config/dns-conf/route53.ini
 DHLEVEL=2048
 DOCKER_MODS=linuxserver/mods:swag-dashboard|linuxserver/mods:swag-auto-reload

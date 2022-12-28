@@ -1,0 +1,14 @@
+
+
+[Create Swarm (Run this on master/manager)] -> docker swarm init --advertise-addr 192.168.1.166
+[See/List nodes in Swarm] -> docker node ls
+[Docker "Run" for Services] -> docker service create --replicas 1 --name Hark-API-Cluster chazzcoin/hark-api:wsgi
+[See/List services running] -> docker service ls
+
+
+-> remove from swarm
+sudo docker swarm leave --force
+
+TroubleShooting:
+- If docker portainer agent isn't starting, stuck in a restart loop:
+    Remove that docker agent from the swarm. Start agent back up, then add swarm back.
