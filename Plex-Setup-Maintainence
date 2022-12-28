@@ -44,6 +44,7 @@ $ sudo apt-get install dkms build-essential make
 
 aoki@aoki-vaatu:/$ nvidia-smi --list-gpus
 GPU 0: NVIDIA GeForce GT 710 (UUID: GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04)
+GPU 0: NVIDIA GeForce GTX 1060 6GB (UUID: GPU-1cb1f125-7a39-606b-33ad-563f2070c3e1)
 
 #-> FINISHED UP -> Verify that drivers were installed
 $ nvidia-smi
