@@ -9,6 +9,6 @@ services:
         restart: always
         volumes:
             - '/var/run/docker.sock:/var/run/docker.sock'
-            - '/media/aoki/3TBMEDIA1/docker/portainer:/data'
+            - '/media/aoki/VaatuCore/docker/portainer:/data'
         image: portainer/portainer
 
