@@ -1,9 +1,16 @@
+DIRECTORIES:
+/usr/lib/systemd/system
+/etc/systemd/system
+
 COMMANDS:
 $ systemctl list-units
 $ systemctl status
-$
+$ systemctl list-unit-files
 $
 
+netfs(remote-fs.target) service -> Daemon for Mounting fstab.
+
+-> Added 'media-aoki-VaatuCore.mount' to 'After=' in docker.service file
 
 Boot/Mount 'UNIT' Order.
 $ sudo systemctl list-units --type=mount
