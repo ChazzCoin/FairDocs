@@ -1,0 +1,31 @@
+COMMANDS:
+$ systemctl list-units
+$ systemctl status
+$
+$
+
+
+Boot/Mount 'UNIT' Order.
+$ sudo systemctl list-units --type=mount
+# Edit Service
+$ systemctl edit --full [servicename.service]
+
+# Create Daemon
+# Make sure to enable daemon after creating file.
+$ systemctl enable my-daemon
+
+# File -> /etc/systemd/system/my-daemon.service
+--
+[Unit]
+Description=Sample Script Startup
+
+[Service]
+Type=idle
+ExecStart=/valid/path/to/an/executable/file
+
+[Install]
+WantedBy=multi-user.target
+--
+
+# Mount all drives in fstab file.
+$ mount -a
