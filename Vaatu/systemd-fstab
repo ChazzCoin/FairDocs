@@ -36,3 +36,8 @@ WantedBy=multi-user.target
 
 # Mount all drives in fstab file.
 $ mount -a
+$ sudo mount /dev/sdd1 /media/gtvradio/GTvRadio
+# See mounted devices
+$ lsblk
+$ sudo fdisk -l
+
