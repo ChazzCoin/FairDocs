@@ -1,0 +1,24 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/nvme0n1p2 during installation
+UUID=c430859c-406f-4b0a-b44f-6dc69d02f901 /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/nvme0n1p1 during installation
+UUID=E0F2-A8C2  /boot/efi       vfat    umask=0077      0       1
+/swapfile                                 none            swap    sw              0       0
+LABEL=3TBMEDIA /media/aoki/3TBMEDIA1 auto nosuid,nodev,nofail,x-gvfs-show 0 0
+LABEL=4TBMEDIA /media/aoki/4TBMEDIA auto nosuid,nodev,nofail,x-gvfs-show 0 0
+LABEL=8TB\040Mal\040Lory /media/aoki/8TB\040Mal\040Lory auto nosuid,nodev,nofail,x-gvfs-show 0 0
+UUID=cd3e7022-eaec-4bd0-95ba-ebb561732565 /media/aoki/10TB\040LuLu1 auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/c1123a29-d429-45ff-9d0d-62e321cfbba5 /media/aoki/4TBTele auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-id/usb-WD_Elements_25A3_5A32475357424454-0:0-part1 /media/aoki/12TBTV auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/4462034c-82b3-4ee1-bce1-3c584f811cc1 /media/aoki/2TBMEDIA auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/29c1e6c8-f24d-43a5-82f9-f6cbce0dbfdb /media/aoki/10TBTV auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/a0f3c792-aa61-445f-81c8-36c44c52c72b /media/aoki/4TBb auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/74641BD20133830E /media/aoki/8TBTV auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/ee1ab443-150f-4445-9b72-b7a514ccb646 /media/aoki/4TBc auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/9d2dcf45-e596-4001-99fb-b23e11d94de3 /media/aoki/VaatuCore auto nosuid,nodev,nofail,x-gvfs-show 0 0
