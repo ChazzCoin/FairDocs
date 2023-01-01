@@ -1,0 +1,4 @@
+
+
+-> Hard drives and their settings are saved in fstab file.
+$ sudo nano /etc/fstab
