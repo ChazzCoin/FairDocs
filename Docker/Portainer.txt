@@ -1,11 +1,14 @@
 
-# -> Main
+# -> Main/ UPDATE PORTAINER TO LATEST VERSION.
+
+# December 2022 = v2.16.2
+
 docker run -d -p 8000:8000 -p 9000:9000 -p 9443:9443 \
-    --name=vaatainer --restart=always \
+    --name=doctainer --restart=always \
     --network proxynet \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /media/aoki/3TBMEDIA1/docker/portainer:/data \
-    portainer/portainer-ce:2.9.3
+    -v /media/aoki/VaatuCore/docker/portainer:/data \
+    portainer/portainer-ce:latest
 
   docker run -p 9443:9443 -p 8000:8000 \
     --name portainer3 --restart always \
