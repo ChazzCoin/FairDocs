@@ -1,0 +1,243 @@
+
+//Plex-amd
+docker run \
+--gpus=all \
+--name=plex \
+--net=host \
+-e PUID=1000 \
+-e PGID=1000 \
+-e UUID=GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04 \
+-e NVIDIA_VISIBLE_DEVICES=GPU-6cf5f0be-59ce-42e3-1688-8d15162ebd04 \
+-e NVIDIA_DRIVER_CAPABILITIES=compute,video,utility \
+--mount type=tmpfs,destination=/transcode,tmpfs-mode=777,tmpfs-size=20G \
+-v /media/aoki/3TBMEDIA1/docker/plex:/config \
+-v /media/aoki:/media \
+--restart unless-stopped \
+linuxserver/plex
+
+Plex-intel
+docker run \
+--name=plex-intel \
+--net=host \
+-e PUID=1000 \
+-e PGID=1000 \
+--mount type=tmpfs,destination=/transcode,tmpfs-mode=777,tmpfs-size=20G \
+-v /media/aoki/3TBMEDIA1/docker/plex:/config \
+-v /media/aoki:/media \
+--restart unless-stopped \
+linuxserver/plex
+
+
+//Ghost
+docker run -d --name ghost -v /media/aoki/3TBMEDIA1/docker/ghost:/var/lib/ghost/content -e url=http://localhost:3001 -p 3001:2368 ghost
+
+//Shiori
+docker run --name shiori -p 8880:8080 -v /media/aoki/3TBMEDIA1/docker/shiori:/srv/shiori radhifadlillah/shiori
+
+//Dokuwiki
+docker run \
+  --name=dokuwiki \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=America/Chicago \
+  -p 800:80 \
+  -p 4443:443 `#optional` \
+  -v /media/aoki/3TBMEDIA1/docker/dokuwiki:/config \
+  --restart unless-stopped \
+  linuxserver/dokuwiki
+ 
+ 
+//more plex?
+-e PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+-e HOME=/root \
+-e LANGUAGE=en_US.UTF-8 \
+-e LANG=en_US.UTF-8 \
+-e TERM=xterm \
+-e NVIDIA_DRIVER_CAPABILITIES=compute,video,utility \
+-e DEBIAN_FRONTEND=noninteractive \
+-e PLEX_DOWNLOAD=https://downloads.plex.tv/plex-media-server-new \
+-e PLEX_ARCH=amd64 \
+-e PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/config/Library/Application Support \
+-e PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver \
+-e PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6 \
+-e PLEX_MEDIA_SERVER_USER=abc \
+-e PLEX_MEDIA_SERVER_INFO_VENDOR=Docker \
+-e PLEX_MEDIA_SERVER_INFO_DEVICE=Docker Container (LinuxServer.io) \
+-e NVIDIA_VISIBLE_DEVICES=all \
+//
+  
+
+//Portainer
+$ docker run -d -p 9000:9000 -p 8000:8000 -p 9443:9443 --name vaatainer --network proxynet --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /media/aoki/VaatuCore/docker/portainer:/data portainer/portainer        
+
+//radar
+docker run \
+    -p 7878:7878 \
+    --name=radarr \
+    -v /media/aoki:/media \
+    -v /media/aoki/3TBMEDIA/docker/Downloads:/data \
+    -v /media/aoki/3TBMEDIA/docker/radarr:/config \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e UMASK=000 \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    binhex/arch-radarr
+    
+//sonarr
+docker run \
+    -p 8989:8989 \
+    -p 9897:9897 \
+    --name=sonarr \
+    -v /media/aoki/3TBMEDIA/docker/Downloads:/media \
+    -v /media/aoki:/data \
+    -v /media/aoki/3TBMEDIA/docker/sonarr:/config \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e UMASK=000 \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    binhex/arch-sonarr
+    
+//organizer
+docker run \
+  --name=organizr \
+  -v /media/aoki/3TBMEDIA/docker/organizr:/config \
+  -e PGID=1000 \
+  -e PUID=1000  \
+  -p 80:80 \
+  organizrtools/organizr-v2
+    
+    
+//Ombi
+docker run \
+  --name=ombi \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=America/Chicago \
+  -p 3579:3579 \
+  -v /media/aoki/3TBMEDIA/docker/ombi:/config \
+  --restart unless-stopped \
+  linuxserver/ombi
+
+
+//jackett
+docker run \
+    -p 9117:9117 \
+    --name=jackett \
+    -v /media/aoki/3TBMEDIA/docker/jackett:/config \
+    -v /media/aoki/3TBMEDIA/docker/jackett:/data \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e UMASK=000 \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    binhex/arch-jackett
+   
+   
+//sabnzbdvpn 
+docker run \
+    --cap-add=NET_ADMIN \
+    -p 8080:8080 \
+    -p 8090:8090 \
+    -p 8118:8118 \
+    --name=sabnzbdvpn \
+    -v /media/aoki:/data \
+    -v /media/aoki/3TBMEDIA/docker/sabnzbd:/config \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e VPN_ENABLED=yes \
+    -e VPN_USER=kBxYkzmAtc \
+    -e VPN_PASS=rtJSEpHLH8 \
+    -e VPN_PROV=custom \
+    -e STRICT_PORT_FORWARD=yes \
+    -e ENABLE_PRIVOXY=yes \
+    -e LAN_NETWORK=192.168.1.0/24 \
+    -e NAME_SERVERS=209.222.18.222,84.200.69.80,37.235.1.174,1.1.1.1,209.222.18.218,37.235.1.177,84.200.70.40,1.0.0.1 \
+    -e DEBUG=false \
+    -e UMASK=000 \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    binhex/arch-sabnzbdvpn
+    
+ 
+//delugevpn
+    docker run \
+    --cap-add=NET_ADMIN \
+    -p 8112:8112 \
+    -p 9119:8118 \
+    -p 58846:58846 \
+    -p 58946:58946 \
+    --name=delugevpn \
+    -v /media/aoki/3TBMEDIA/docker/Downloads:/data \
+    -v /media/aoki/3TBMEDIA/docker/deluge:/config \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e VPN_ENABLED=yes \
+    -e VPN_USER=VfqQBenJgB \
+    -e VPN_PASS=pvP79Wj9qs \
+    -e VPN_PROV=custom \
+    -e STRICT_PORT_FORWARD=yes \
+    -e ENABLE_PRIVOXY=yes \
+    -e LAN_NETWORK=192.168.1.0/24 \
+    -e NAME_SERVERS=209.222.18.222,84.200.69.80,37.235.1.174,1.1.1.1,209.222.18.218,37.235.1.177,84.200.70.40,1.0.0.1 \
+    -e DEBUG=true \
+    -e UMASK=000 \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    binhex/arch-delugevpn
+    
+    
+//unifi-controller
+    docker run \
+  --name=unifi-controller \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -p 3478:3478/udp \
+  -p 10001:10001/udp \
+  -p 8888:8080 \
+  -p 8443:8443 \
+  -v /media/aoki/3TBMEDIA/docker/unifi:/config \
+  --restart unless-stopped \
+    linuxserver/unifi-controller
+  
+
+//duckdns
+docker run -d \
+  --name=duckdns \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=America/Chicago \
+  -e SUBDOMAINS=aokiromeo,aokiplex \
+  -e TOKEN=3cdbd5f9-e51e-4af8-90f2-d9409b98ac15 \
+  -e LOG_FILE=false \
+  -v /media/aoki/3TBMEDIA/docker/duckdns:/config \
+  --restart unless-stopped \
+  ghcr.io/linuxserver/duckdns
+  
+  
+//swag
+
+
+
+//nvidia
+CMD=nvidia-smi
+-ENV-	
+PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+CUDA_VERSION=10.0.130
+CUDA_PKG_VERSION=10-0=10.0.130-1
+LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+NVIDIA_VISIBLE_DEVICES=all
+NVIDIA_DRIVER_CAPABILITIES=compute,utility
+NVIDIA_REQUIRE_CUDA=cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=410,driver<411
+
+
+//mongodb
+
+
+
+//freshrss
+docker run -d \
+  --name=freshrss \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=America/Chicago \
+  -p 81:80 \
+  -v /media/aoki/3TBMEDIA1/docker/freshrss:/config \
+  --restart unless-stopped \
+  ghcr.io/linuxserver/freshrss:latest
